@@ -13,9 +13,10 @@ Source code for our paper:
  <a href="#-overview"> 📖 Overview </a> •
  <a href="#️-setup">⚙️ Setup</a> •
  <a href="#️-training">⚡️ Training </a> •
- <a href="#-inference">🔧 Inference </a> •
- <a href="#️-training">🚀 Quick Usage </a> •
+ <a href="#-inference">🔧 Inference </a>
+ <br>
  <a href="#-evaluation">📃 Evaluation </a> •
+ <a href="#-quick-usage">🚀 Quick Usage </a> •
  <a href="#contact">📧 Contact</a> 
 </p>
 
