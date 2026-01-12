@@ -1,0 +1,112 @@
+data:
+  train_files: train_split.jsonl
+  val_files: val_split.jsonl
+
+  prompt_key: problem
+  answer_key: answer
+  image_key: images
+  video_key: ""
+  video_fps: 2.0
+
+  max_prompt_length: 8192
+  max_response_length: 2048
+  min_pixels: 200704
+  max_pixels: 401408
+  
+  rollout_batch_size: 48
+  val_batch_size: 48
+
+  format_prompt: Lang2Act/src/Easyr1/examples/format_prompt/actionrl.jinja
+  seed: 1
+  filter_overlong_prompts: false
+
+algorithm:
+  adv_estimator: grpo
+  disable_kl: true
+  use_kl_loss: false
+
+  kl_penalty: low_var_kl
+  kl_coef: 1.0e-2   
+
+
+  online_filtering: true
+  filter_key: overall          
+  filter_low: 0.1             
+  filter_high: 0.9            
+
+worker:
+  actor:
+    global_batch_size: 8           
+    micro_batch_size_per_device_for_update: 2
+    micro_batch_size_per_device_for_experience: 1
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    clip_ratio_dual: 10.0
+
+
+    max_grad_norm: 1    
+    padding_free: true
+    model:
+      model_path: Qwen/Qwen2.5-VL-7B-Instruct
+      enable_gradient_checkpointing: true
+      trust_remote_code: true
+      freeze_vision_tower: true
+    optim:
+      lr: 1e-6              
+      weight_decay: 1.0e-2
+      strategy: adamw_bf16
+    fsdp:
+      torch_dtype: bf16
+      enable_full_shard: true
+      enable_cpu_offload: false      
+      enable_rank0_init: true
+    offload:
+      offload_params: true
+      offload_optimizer: true
+
+  rollout:
+    n: 5                    
+    temperature: 1.0
+    top_p: 0.99
+    limit_images: 0
+    gpu_memory_utilization: 0.7
+    tensor_parallel_size: 2
+
+    max_num_batched_tokens: 16384
+    max_model_len: 32768
+    disable_tqdm: false
+    val_override_config:
+      temperature: 0.5
+      n: 1                   
+
+  ref:
+    fsdp:
+      enable_full_shard: true
+      enable_cpu_offload: true
+      enable_rank0_init: true
+    offload:   
+      offload_params: true
+
+  reward:
+    reward_type: batch
+    reward_function: Lang2ACT/src/Easyr1/examples/reward_function/actionrl.py:compute_score
+
+trainer:
+  total_epochs: 4
+  max_steps: null
+  project_name: Lang2Act
+  experiment_name: qwen2_5_7b_actionrl
+  
+  logger: ["console", "wanlab"]
+  nnodes: 1
+  n_gpus_per_node: 2
+  
+  val_freq: 50
+  val_before_train: false
+  val_only: false
+  val_generations_to_log: 3
+  save_freq: 25
+  save_limit: 1
+  save_model_only: false
+  save_checkpoint_path: null
+  load_checkpoint_path: null

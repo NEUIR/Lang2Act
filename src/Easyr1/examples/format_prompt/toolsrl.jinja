@@ -1,0 +1,79 @@
+{{ content | trim }}
+Your task is to answer the user's question by analyzing the provided images.
+Your response must strictly follow this XML format:
+<think>...</think>
+<description>...</description>
+<answer>...</answer>
+
+Guidance for each tag:
+1. `<think>`: Analyze all 3 images and state which image(s) are relevant to the question.
+2. `<description>`: Focusing *only* on the selected image(s), describe your evidence-gathering steps using the tools below.
+3. `<answer>`: Provide only the final, concise answer.
+
+Available Tools for `<description>`:
+  - `<tool name="locate_visual_element" args="Image k: structural hint/description">Locate specific visual elements or regions based on structural hints.</tool>`
+  - `<tool name="read_text_element" args="Image k: locator/region">Read and transcribe visible text from the located region.</tool>`
+  - `<tool name="read_numeric_value" args="Image k: data point/visual element">Extract specific numeric values or counts from visual elements.</tool>`
+  - `<tool name="identify_entity_attribute" args="Image k: entity">Identify specific attributes associated with entities.</tool>`
+  - `<tool name="compare_values" args="Image k: value A vs value B">Compare quantitative values to determine ordering or equality.</tool>`
+  - `<tool name="compute_percentage" args="part_value, total_value">Compute the percentage based on given values.</tool>`
+  - `<tool name="infer_missing_information" args="Image k: existing data">Infer missing information based on given data.</tool>`
+
+### Examples:
+
+Example 1 (Locating and Reading Data):
+User Question: What is the unemployment rate for France listed in the table?
+Input: [Image 1: Report cover], [Image 2: 'Economic Indicators' table], [Image 3: Graph page]
+
+Response:
+<think>
+Image 1 is a cover page. Image 2 contains the relevant table with economic data. Image 3 is a graph. I will focus on Image 2.
+</think>
+<description>
+<tool name="locate_visual_element" args="Image 2: Row for 'France'">
+I have located the row corresponding to 'France' in the table.
+</tool>
+<tool name="read_numeric_value" args="Image 2: Column 'Unemployment Rate' in France row">
+The value in the Unemployment Rate column for France is 7.2%.
+</tool>
+</description>
+<answer>7.2%</answer>
+
+Example 2 (Multi-image Comparison):
+User Question: Was the revenue higher in 2023 than in 2022?
+Input: [Image 1: 2022 Financial Chart], [Image 2: 2023 Financial Chart], [Image 3: Contact Info]
+
+Response:
+<think>
+Image 1 shows 2022 data. Image 2 shows 2023 data. Image 3 is irrelevant. I need to compare values from Image 1 and Image 2.
+</think>
+<description>
+<tool name="read_numeric_value" args="Image 1: Total Revenue">
+The total revenue for 2022 is $5.4 million.
+</tool>
+<tool name="read_numeric_value" args="Image 2: Total Revenue">
+The total revenue for 2023 is $6.1 million.
+</tool>
+<tool name="compare_values" args="$6.1m (2023) vs $5.4m (2022)">
+$6.1 million is greater than $5.4 million.
+</tool>
+</description>
+<answer>Yes, it was higher.</answer>
+
+Example 3 (Text Extraction):
+User Question: What is the full name of the vendor listed on the invoice header?
+Input: [Image 1: Invoice Header section], [Image 2: Itemized list], [Image 3: Payment terms footer]
+
+Response:
+<think>
+Image 1 shows the top section of the document, which typically contains vendor details. Image 2 shows numbers and items. Image 3 shows legal text. I need to focus on Image 1 to find the vendor name.
+</think>
+<description>
+<tool name="locate_visual_element" args="Image 1: Top left corner/Logo area">
+I have located the bold text block in the top left corner of the invoice header.
+</tool>
+<tool name="read_text_element" args="Image 1: Vendor Name">
+The text in the identified region reads 'Acme Supply Co., Ltd.'.
+</tool>
+</description>
+<answer>Acme Supply Co., Ltd.</answer>

@@ -1,0 +1,11 @@
+{{ content | trim }}
+Your task is to answer the user's question by carefully analyzing all images.
+Your response must strictly follow this XML format:
+<thinking>...</thinking>
+<description>...</description>
+<answer>...</answer> 
+
+Guidance:
+- You have exactly 3 images. Analyze each briefly in <thinking>, then conclude which one(s) you used.
+- In <description>,describe only the visual evidence you actually used, and clearly indicate where it appears in the image 
+- In <answer>, output only the final concise answer.
