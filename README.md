@@ -64,7 +64,7 @@ bash scripts/predict.sh
 ## 📃 Evaluation
 We use an LLM-as-a-Judge mechanism to evaluate the correctness of the generated answers. The evaluation script calls a powerful model (e.g., Qwen2.5-72B-Instruct) to compare predictions against ground truth.
 ### 1. Set Environment Variable
-Before running the evaluation, you must export your SiliconFlow API key:
+If you want to judge the prediction with APIs, you must export your SiliconFlow API key before running the evaluation:
 
 ```
 export SILICONFLOW_API_KEY="your_actual_api_key"
@@ -166,8 +166,9 @@ print(outputs[0].outputs[0].text)
 Our work is built on the following codebases, and we are deeply grateful for their contributions.
 - [EasyR1](https://github.com/hiyouga/EasyR1)
 - [vllm](https://github.com/vllm-project/vllm)
+
 ## 📧 Contact
-If you have questions, suggestions, and bug reports, please email:
+If you have questions, suggestions, and bug reports, please give us an issue or email:
 ```
 yqxiong54@gmail.com
 ```
