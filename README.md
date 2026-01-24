@@ -16,7 +16,7 @@ Source code for our paper:
  <a href="#-inference">🔧 Inference </a>
  <br>
  <a href="#-evaluation">📃 Evaluation </a> •
- <a href="#-quick-usage">🚀 Quick Usage </a> •
+ <a href="#-quick-start">🚀 Quick Start </a> •
  <a href="#contact">📧 Contact</a> 
 </p>
 
@@ -75,7 +75,7 @@ You can run the evaluation using the provided shell script. You can pass a speci
 bash scripts/eval.sh
 ```
 
-## 🚀 Quick Usage
+## 🚀 Quick Start
 Model on Hugging Face: https://huggingface.co/xiongyq/Lang2Act-7B
 
 ```python
