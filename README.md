@@ -4,7 +4,7 @@ Source code for our paper:
 **Lang2Act: Fine-Grained Visual Reasoning through Self-Emergent Linguistic Toolchains**
 <div align="center">
 
-[![Paper](https://img.shields.io/badge/Paper-Arxiv-red)](https://arxiv.org/abs/2501.xxxxx)
+[![Paper](https://img.shields.io/badge/Paper-Arxiv-red)](https://arxiv.org/abs/2602.13235)
 [![Model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-blue)](https://huggingface.co/xiongyq/Lang2Act-7B)
 [![Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-orange)](https://huggingface.co/datasets/xiongyq/Lang2Act-Train)
 
